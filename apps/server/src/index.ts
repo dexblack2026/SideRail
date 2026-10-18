@@ -26,7 +26,7 @@ import { startCore, collectTraffic, collectClientIps, enforceIpLimits, restartCo
 import { applyTrafficReset } from "./users.js";
 import { enforceAdminExpiry } from "./auth.js";
 import { rateLimit } from "./ratelimit.js";
-import { sendDailyBackup } from "./bot.js";
+import { sendDailyBackup, startBotPolling } from "./bot.js";
 import { refreshIpInfo } from "./ipinfo.js";
 import { SIDERAIL_SIGNATURE, watermark } from "./brand.js";
 
@@ -82,6 +82,7 @@ const server = http.createServer((req, res) => {
 });
 
 attachTunnel(server);
+startBotPolling();
 
 server.listen(config.port, config.host, async () => {
   console.log(`SideRail listening on http://${config.host}:${config.port}`);
